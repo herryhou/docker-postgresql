@@ -15,7 +15,7 @@ DB_NAME=${DB_NAME:-}
 DB_USER=${DB_USER:-}
 DB_PASS=${DB_PASS:-}
 DB_UNACCENT=${DB_UNACCENT:false}
-DB_GIS=${DB_GIS:true}
+DB_GIS=${DB_GIS:-true}
 
 # fix permissions and ownership of ${PG_HOME}
 mkdir -p -m 0700 ${PG_HOME}
