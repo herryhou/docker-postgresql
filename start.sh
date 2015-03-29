@@ -138,7 +138,10 @@ if [ -n "${DB_NAME}" ]; then
     
     if [ "${DB_GIS}" == "true" ]; then
       echo "Installing PostGIS extension..."
-      echo "CREATE EXTENSION IF NOT EXISTS postgis; CREATE EXTENSION IF NOT EXISTS postgis_topology;" | \
+      echo "CREATE EXTENSION IF NOT EXISTS postgis;" | \
+        sudo -u postgres -H ${PG_BINDIR}/postgres --single ${db} \
+          -D ${PG_DATADIR} -c config_file=${PG_CONFDIR}/postgresql.conf >/dev/null
+      echo "CREATE EXTENSION IF NOT EXISTS postgis_topology;" | \
         sudo -u postgres -H ${PG_BINDIR}/postgres --single ${db} \
           -D ${PG_DATADIR} -c config_file=${PG_CONFDIR}/postgresql.conf >/dev/null
     fi
