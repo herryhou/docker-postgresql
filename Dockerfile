@@ -10,7 +10,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg m
         postgresql-${PG_VERSION} \
         postgresql-client-${PG_VERSION} \
         postgresql-contrib-${PG_VERSION} \
-        postgresql-${PG_VERSION}-${PG_GIS_VERSION} \
+        postgresql-${PG_VERSION}-postgis-${PG_GIS_VERSION} \
         pwgen \
      && apt-get autoclean \
      && apt-get clean \
