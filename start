@@ -15,6 +15,7 @@ DB_NAME=${DB_NAME:-}
 DB_USER=${DB_USER:-}
 DB_PASS=${DB_PASS:-}
 DB_UNACCENT=${DB_UNACCENT:false}
+DB_GIS=${DB_GIS:true}
 
 # fix permissions and ownership of ${PG_HOME}
 mkdir -p -m 0700 ${PG_HOME}
@@ -132,6 +133,13 @@ if [ -n "${DB_NAME}" ]; then
       echo "Granting access to database \"${db}\" for user \"${DB_USER}\"..."
       echo "GRANT ALL PRIVILEGES ON DATABASE ${db} to ${DB_USER};" |
         sudo -u postgres -H ${PG_BINDIR}/postgres --single \
+          -D ${PG_DATADIR} -c config_file=${PG_CONFDIR}/postgresql.conf >/dev/null
+    fi
+    
+    if [ "${DB_GIS}" == "true" ]; then
+      echo "Installing PostGIS extension..."
+      echo "CREATE EXTENSION IF NOT EXISTS postgis; CREATE EXTENSION IF NOT EXISTS postgis_topology;" | \
+        sudo -u postgres -H ${PG_BINDIR}/postgres --single ${db} \
           -D ${PG_DATADIR} -c config_file=${PG_CONFDIR}/postgresql.conf >/dev/null
     fi
   done
